@@ -2,6 +2,8 @@ package com.hita.tata.common.mongodb.dao;
 
 import com.hita.tata.common.mongodb.entity.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,17 +16,16 @@ import java.util.Date;
  * @author abel
  */
 @Service
+@PropertySource("classpath:application.properties")
 public class MongoServiceImp implements MongoService {
 
 	@Autowired
 	protected GridFsOperations operations;
 
-//	@Value("${data.mongodb.host}")
-//	private String host;
-//	@Value("${data.mongodb.prefix}")
-//	private String prefix;
-//	@Value("${data.mongodb.project}")
-//	private String project;
+	@Value("${spring.data.mongodb.host}")
+	private String host1;
+	@Value("${data.mongodb.prefix}")
+	private String prefix1;
 
 
 	/**
@@ -69,18 +70,15 @@ public class MongoServiceImp implements MongoService {
 	@Override
 	public String getFileUrl(String fileName) {
 		//从配置文件中获取
-		StringBuilder host = new StringBuilder("129.204.203.97");
-		StringBuilder prefix = new StringBuilder("tata");
-		StringBuilder project = new StringBuilder("test");
+		StringBuilder host = new StringBuilder(host1);
+		StringBuilder prefix = new StringBuilder(prefix1);
 
 		//拼接成新的url
 		StringBuilder result = new StringBuilder();
 		result.append("http://" + host);
 		result.append("/");
-//		result.append(prefix);
-//		result.append("/");
-//		result.append(project);
-//		result.append("/");
+		result.append(prefix);
+		result.append("/");
 		result.append(fileName);
 
 		return result.toString();

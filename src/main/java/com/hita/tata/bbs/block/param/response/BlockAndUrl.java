@@ -1,7 +1,7 @@
 package com.hita.tata.bbs.block.param.response;
 
 public class BlockAndUrl {
-	private String name ;
+	private String name;
 	private String imgUrl;
 
 	public BlockAndUrl() {
