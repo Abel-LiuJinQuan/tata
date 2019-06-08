@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Mongo操作接口类
+ * @author abel
  */
 @Service
 public interface MongoService {

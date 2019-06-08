@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * 文件保存信息基本类
- * Created by KennyLau on 2017-5-13.
+ * @author abel
  */
 public class FileInfo implements Serializable {
 //    private String id;
