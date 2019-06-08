@@ -77,10 +77,10 @@ public class MongoServiceImp implements MongoService {
 		StringBuilder result = new StringBuilder();
 		result.append("http://" + host);
 		result.append("/");
-		result.append(prefix);
-		result.append("/");
-		result.append(project);
-		result.append("/");
+//		result.append(prefix);
+//		result.append("/");
+//		result.append(project);
+//		result.append("/");
 		result.append(fileName);
 
 		return result.toString();
