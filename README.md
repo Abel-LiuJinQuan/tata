@@ -24,3 +24,5 @@ public interface BlockRepository {
 @Update  更新
 @Insert  插入
 @Delete  删除
+### 二、关于Mongodb使用：
+项目已经实现了Mongodb的图片和文件存储接口，实现方法在com.hita.tata.common.mongodb.dao下的MongoServiceImp类中，类中还提供了返回图片/文件的访问链接的方法。
