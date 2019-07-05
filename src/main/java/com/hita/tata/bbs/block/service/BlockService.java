@@ -1,6 +1,7 @@
 package com.hita.tata.bbs.block.service;
 
 import com.hita.tata.bbs.block.dao.BlockRepository;
+import com.hita.tata.bbs.block.param.response.AddBlockResp;
 import com.hita.tata.bbs.block.param.response.BlockAndUrl;
 import com.hita.tata.common.entity.bbs.block.Bbs_class;
 import com.hita.tata.common.mongodb.dao.MongoServiceImp;
@@ -35,17 +36,35 @@ public class BlockService {
 
 	/**
 	 * 添加栏目分类
-	 * @param bbs_class
+	 * @param
 	 * @param file
 	 * @return
 	 */
-	public Bbs_class addBlocks(Bbs_class bbs_class, MultipartFile file) {
-		String id = file.getOriginalFilename() + new Date().getTime();
+	public AddBlockResp addBlocks(MultipartFile file,String name,String parentName) {
+		Date dateTime = new Date();
+		//栏目ID
+		String id = file.getOriginalFilename() + dateTime.getTime();
+		//栏目logo图片的URL
 		String url = mongoServiceImp.saveImage(file);
+		//返回给前端的数据
+		AddBlockResp addBlockResp = new AddBlockResp();
+		addBlockResp.setImgUrl(url);
+		addBlockResp.setName(name);
+		addBlockResp.setParentName(parentName);
+		addBlockResp.setCreatedOn(dateTime);
+		//存进数据库的数据
+		Bbs_class bbs_class = new Bbs_class();
 		bbs_class.setId(id);
+		bbs_class.setParentId(parentName);
+		bbs_class.setName(name);
+		bbs_class.setTopicCount(0);
+		bbs_class.setReplyCount(0);
 		bbs_class.setImgUrl(url);
+		bbs_class.setEnabled("1");
+		bbs_class.setCreatedOn(dateTime);
+		//添加进数据库
 		blockRepository.addBlocks(bbs_class);
-		return bbs_class;
+		return addBlockResp;
 	}
 
 	public String addImage(MultipartFile file) throws IOException {

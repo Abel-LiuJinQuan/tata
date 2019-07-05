@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Bbs_class {
 	private String id;
-	private Integer parentId;
+	private String parentId;
 	private String name;
 	private String keyValue;
 	private Integer sortOrder;
@@ -36,11 +36,11 @@ public class Bbs_class {
 		this.id = id;
 	}
 
-	public Integer getParentId() {
+	public String getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 
@@ -163,5 +163,4 @@ public class Bbs_class {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
 }

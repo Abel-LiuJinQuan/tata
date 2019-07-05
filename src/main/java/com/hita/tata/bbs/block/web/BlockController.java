@@ -1,8 +1,8 @@
 package com.hita.tata.bbs.block.web;
 
+import com.hita.tata.bbs.block.param.response.AddBlockResp;
 import com.hita.tata.bbs.block.param.response.BlockAndUrl;
 import com.hita.tata.bbs.block.service.BlockService;
-import com.hita.tata.common.entity.bbs.block.Bbs_class;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +22,7 @@ public class BlockController {
 	private BlockService blockService;
 
 	/**
-	 * 获取所有栏目，并排序返回（栏目名 + 图标url）已测试
+	 * 获取所有栏目，并排序返回（返回值：栏目名 + 图标url）已测试
 	 * @return
 	 */
 	@RequestMapping(
@@ -33,19 +33,20 @@ public class BlockController {
 		return blockService.listBlocks();
 	}
 
-//	/**
-//	 * 添加栏目分类（怎么同时接受参数和图片文件？？）
-//	 * @param bbs_class
-//	 * @param file
-//	 * @return
-//	 */
-//	@RequestMapping(
-//			value = {"addBlock"},
-//			method = RequestMethod.POST
-//	)
-//	public Bbs_class addBlocks(@RequestBody Bbs_class bbs_class, @RequestBody MultipartFile file) {
-//		return blockService.addBlocks(bbs_class,file);
-//	}
+	/**
+	 * 添加栏目 (入参：logo图片 + 栏目名 + 栏目所属频道) 已测试
+	 * @param file
+	 * @param name
+	 * @param parentName
+	 * @return
+	 */
+	@RequestMapping(
+			value = {"addBlock"},
+			method = RequestMethod.POST
+	)
+	public AddBlockResp addBlocks(@RequestParam("file") MultipartFile file,String name,String parentName) {
+		return blockService.addBlocks(file,name,parentName);
+	}
 
 	/**
 	 * 修改栏目信息
