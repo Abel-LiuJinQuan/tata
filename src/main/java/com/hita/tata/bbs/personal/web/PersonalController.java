@@ -1,5 +1,7 @@
 package com.hita.tata.bbs.personal.web;
 
+import com.hita.tata.bbs.personal.service.PersonalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "personal")
 public class PersonalController {
 
+	@Autowired
+	private PersonalService  personalService;
 	/**
 	 * 获取用户信息
 	 */
@@ -19,7 +23,7 @@ public class PersonalController {
 			method = RequestMethod.POST
 	)
 	public void getUserInform() {
-
+//		return personalService.getUserInform();
 	}
 
 	/**

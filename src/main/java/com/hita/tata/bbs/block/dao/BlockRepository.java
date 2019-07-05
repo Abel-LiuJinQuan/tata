@@ -10,14 +10,14 @@ import java.util.List;
 public interface BlockRepository {
 
 	/**
-	 * 获取所有栏目分类（名字 + 图标url）
+	 * 获取所有栏目分类（栏目名 + 图标url）
 	 * @return
 	 */
 	@Results({
 		@Result(column = "name",property = "name"),
 		@Result(column = "imgUrl",property = "imgUrl")
 	})
-	@Select("select * from bbs_class where enabled = 1")
+	@Select("select * from bbs_class where enabled = 1 order by createdOn asc")
 	List<BlockAndUrl> listBlocks();
 
 	/**

@@ -7,7 +7,6 @@ import com.hita.tata.common.mongodb.dao.MongoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
@@ -27,7 +26,7 @@ public class BlockService {
 	protected MongoServiceImp mongoServiceImp;
 
 	/**
-	 * 获取所有栏目分类（名字 + 图标url）
+	 * 获取所有栏目分类（栏目名 + 图标url）
 	 * @return
 	 */
 	public List<BlockAndUrl> listBlocks() {

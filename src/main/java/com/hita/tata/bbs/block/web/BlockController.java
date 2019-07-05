@@ -22,7 +22,7 @@ public class BlockController {
 	private BlockService blockService;
 
 	/**
-	 * 获取所有栏目分类（名字 + 图标url）
+	 * 获取所有栏目，并排序返回（栏目名 + 图标url）已测试
 	 * @return
 	 */
 	@RequestMapping(
@@ -33,19 +33,19 @@ public class BlockController {
 		return blockService.listBlocks();
 	}
 
-	/**
-	 * 添加栏目分类
-	 * @param bbs_class
-	 * @param file
-	 * @return
-	 */
-	@RequestMapping(
-			value = {"addBlock"},
-			method = RequestMethod.POST
-	)
-	public Bbs_class addBlocks(@RequestBody Bbs_class bbs_class, @RequestBody MultipartFile file) {
-		return blockService.addBlocks(bbs_class,file);
-	}
+//	/**
+//	 * 添加栏目分类（怎么同时接受参数和图片文件？？）
+//	 * @param bbs_class
+//	 * @param file
+//	 * @return
+//	 */
+//	@RequestMapping(
+//			value = {"addBlock"},
+//			method = RequestMethod.POST
+//	)
+//	public Bbs_class addBlocks(@RequestBody Bbs_class bbs_class, @RequestBody MultipartFile file) {
+//		return blockService.addBlocks(bbs_class,file);
+//	}
 
 	/**
 	 * 修改栏目信息
@@ -58,16 +58,6 @@ public class BlockController {
 
 	}
 
-	/**
-	 * 删除一个栏目
-	 */
-	@RequestMapping(
-			value = {"deleteBlock"},
-			method = RequestMethod.POST
-	)
-	public void deleteBlock() {
-
-	}
 
 	/**
 	 * 获取所有栏目名
@@ -80,18 +70,18 @@ public class BlockController {
 
 	}
 
-//	/**
-//	 * 添加图片并返回URL
-//	 * @param file
-//	 * @return
-//	 * @throws IOException
-//	 */
-//	@RequestMapping(
-//			value = {"add"},
-//			method = RequestMethod.POST
-//	)
-//	public String add(@RequestBody MultipartFile file) throws IOException {
-//		return blockService.addImage(file);
-//	}
+	/**
+	 * 添加图片并返回URL
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(
+			value = {"add"},
+			method = RequestMethod.POST
+	)
+	public String add(@RequestBody MultipartFile file) throws IOException {
+		return blockService.addImage(file);
+	}
 
 }
