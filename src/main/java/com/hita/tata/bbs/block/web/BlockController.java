@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -64,30 +63,18 @@ public class BlockController {
 		return blockService.updateBlock(file,id,name,parentName);
 	}
 
-
-	/**
-	 * 获取所有栏目名
-	 */
-	@RequestMapping(
-			value = {"listBlockName"},
-			method = RequestMethod.POST
-	)
-	public void listBlockName() {
-
-	}
-
-	/**
-	 * 添加图片并返回URL
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping(
-			value = {"add"},
-			method = RequestMethod.POST
-	)
-	public String add(@RequestBody MultipartFile file) throws IOException {
-		return blockService.addImage(file);
-	}
+//	/**
+//	 * 添加图片并返回URL
+//	 * @param file
+//	 * @return
+//	 * @throws IOException
+//	 */
+//	@RequestMapping(
+//			value = {"add"},
+//			method = RequestMethod.POST
+//	)
+//	public String add(@RequestBody MultipartFile file) throws IOException {
+//		return blockService.addImage(file);
+//	}
 
 }

@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 @EnableMongoAuditing
 @ComponentScan
 //@ServletComponentScan(basePackages = "com.hita.tata")
-@MapperScan("com.hita.tata.bbs.block.dao")
+@MapperScan({"com.hita.tata.bbs.block.dao","com.hita.tata.bbs.article.dao"})
 public class TataApplication {
 
 	public static void main(String[] args) {

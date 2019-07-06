@@ -1,9 +1,11 @@
 package com.hita.tata.bbs.article.web;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.hita.tata.bbs.article.param.request.PublishArticle;
+import com.hita.tata.bbs.article.param.response.PublishArticleResp;
+import com.hita.tata.bbs.article.service.ArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 论坛帖子部分
@@ -12,27 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "article")
 public class ArticleController {
+	@Autowired
+	private ArticleService articleService;
 
 	/**
-	 * 发布帖子
+	 * 发布帖子（已测试）
+	 * @param publishArticle
+	 * @return
 	 */
 	@RequestMapping(
 			value = {"publishArticle"},
 			method = RequestMethod.POST
 	)
-	public void publishArticle() {
-
-	}
-
-	/**
-	 * 保存到草稿箱
-	 */
-	@RequestMapping(
-			value = {"saveDrafts"},
-			method = RequestMethod.POST
-	)
-	public void saveDrafts() {
-
+	public PublishArticleResp publishArticle(@ModelAttribute PublishArticle publishArticle) {
+		return articleService.publishArticle(publishArticle);
 	}
 
 	/**
