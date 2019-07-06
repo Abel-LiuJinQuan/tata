@@ -48,6 +48,7 @@ public class BlockService {
 		String url = mongoServiceImp.saveImage(file);
 		//返回给前端的数据
 		AddBlockResp addBlockResp = new AddBlockResp();
+		addBlockResp.setId(id);
 		addBlockResp.setImgUrl(url);
 		addBlockResp.setName(name);
 		addBlockResp.setParentName(parentName);
@@ -66,6 +67,20 @@ public class BlockService {
 		blockRepository.addBlocks(bbs_class);
 		return addBlockResp;
 	}
+
+	public AddBlockResp updateBlock(MultipartFile file,String id,String name,String parentName) {
+		//栏目logo图片的URL
+		String url = mongoServiceImp.saveImage(file);
+		//返回给前端的数据
+		AddBlockResp addBlockResp = new AddBlockResp();
+		addBlockResp.setId(id);
+		addBlockResp.setName(name);
+		addBlockResp.setParentName(parentName);
+		addBlockResp.setImgUrl(url);
+		blockRepository.updateBlock(id,name,parentName,url);
+		return addBlockResp;
+	}
+
 
 	public String addImage(MultipartFile file) throws IOException {
 		operations.store(file.getInputStream(),file.getOriginalFilename());

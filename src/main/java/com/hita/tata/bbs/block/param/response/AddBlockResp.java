@@ -3,12 +3,21 @@ package com.hita.tata.bbs.block.param.response;
 import java.util.Date;
 
 public class AddBlockResp {
+	private String id;
 	private String imgUrl;
 	private String name;
 	private String parentName;
 	private Date createdOn;
 
 	public AddBlockResp() {
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getImgUrl() {

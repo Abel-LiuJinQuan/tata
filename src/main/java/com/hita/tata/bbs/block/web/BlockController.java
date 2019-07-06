@@ -22,8 +22,8 @@ public class BlockController {
 	private BlockService blockService;
 
 	/**
-	 * 获取所有栏目，并排序返回（返回值：栏目名 + 图标url）已测试
-	 * @return
+	 * 获取所有栏目，并排序返回 （已测试）
+	 * @return 栏目名 + 图标url
 	 */
 	@RequestMapping(
 			value = {"listBlocks"},
@@ -34,10 +34,10 @@ public class BlockController {
 	}
 
 	/**
-	 * 添加栏目 (入参：logo图片 + 栏目名 + 栏目所属频道) 已测试
-	 * @param file
-	 * @param name
-	 * @param parentName
+	 * 添加栏目 （已测试）
+	 * @param file logo图片
+	 * @param name 栏目名
+	 * @param parentName 栏目所属频道
 	 * @return
 	 */
 	@RequestMapping(
@@ -49,14 +49,19 @@ public class BlockController {
 	}
 
 	/**
-	 * 修改栏目信息
+	 * 修改栏目信息 （已测试）
+	 * @param file logo图片
+	 * @param id 栏目所属频道
+	 * @param name 栏目名
+	 * @param parentName 栏目所属频道
+	 * @return
 	 */
 	@RequestMapping(
 			value = {"updateBlock"},
 			method = RequestMethod.POST
 	)
-	public void updateBlock() {
-
+	public AddBlockResp updateBlock(@RequestParam("file") MultipartFile file,String id,String name,String parentName) {
+		return blockService.updateBlock(file,id,name,parentName);
 	}
 
 

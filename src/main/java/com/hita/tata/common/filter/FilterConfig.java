@@ -18,7 +18,7 @@ public class FilterConfig {
         
         registration.setFilter(new WebFilter());//添加我们写好的filter
         
-        registration.addUrlPatterns("/block/updateBlock");//设置filter的过滤的url模式
+        registration.addUrlPatterns("/block/test");//设置filter的过滤的url模式
         
         return registration;//返回这个就是Spring会帮你注入的那个对象
         

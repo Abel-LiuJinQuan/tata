@@ -14,8 +14,9 @@ public interface BlockRepository {
 	 * @return
 	 */
 	@Results({
-		@Result(column = "name",property = "name"),
-		@Result(column = "imgUrl",property = "imgUrl")
+			@Result(column = "id",property = "id"),
+			@Result(column = "name",property = "name"),
+			@Result(column = "imgUrl",property = "imgUrl")
 	})
 	@Select("select * from bbs_class where enabled = 1 order by createdOn asc")
 	List<BlockAndUrl> listBlocks();
@@ -30,4 +31,14 @@ public interface BlockRepository {
 			"#{lastTopicId},#{url},#{imgUrl},#{createdBy}," +
 			"#{enabled},#{createdOn})")
 	void addBlocks(Bbs_class bbs_class);
+
+	/**
+	 * 修改栏目信息
+	 * @param id
+	 * @param name
+	 * @param parentId
+	 * @param imgUrl
+	 */
+	@Update("update bbs_class set name = #{arg1}, parentId = #{arg2}, imgUrl = #{arg3} where id = #{arg0}")
+	void updateBlock(String id,String name,String parentId,String imgUrl);
 }
