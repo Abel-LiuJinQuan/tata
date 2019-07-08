@@ -2,7 +2,9 @@ package com.hita.tata.bbs.article.web;
 
 
 import com.hita.tata.bbs.article.param.request.PublishArticle;
+import com.hita.tata.bbs.article.param.request.PublishReply;
 import com.hita.tata.bbs.article.param.response.PublishArticleResp;
+import com.hita.tata.bbs.article.param.response.PublishReplyResp;
 import com.hita.tata.bbs.article.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +33,16 @@ public class ArticleController {
 	}
 
 	/**
-	 * 发表评论
+	 * 回复楼主的帖子(已测试)
+	 * @param publishReply
+	 * @return
 	 */
 	@RequestMapping(
-			value = {"publishComment"},
+			value = {"publishReply"},
 			method = RequestMethod.POST
 	)
-	public void publishComment() {
-
+	public PublishReplyResp publishReply(@ModelAttribute PublishReply publishReply) {
+		return articleService.publishReply(publishReply);
 	}
 
 }
