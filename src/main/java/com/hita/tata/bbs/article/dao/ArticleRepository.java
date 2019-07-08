@@ -1,5 +1,6 @@
 package com.hita.tata.bbs.article.dao;
 
+import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
 import org.apache.ibatis.annotations.Insert;
@@ -62,4 +63,11 @@ public interface ArticleRepository {
 	@Insert("insert into bbs_reply values(#{id},#{topicId},#{title},#{body},#{userId}," +
 			"#{modifiedOn},#{createdOn})")
 	void publishReply(Bbs_reply bbs_reply);
+
+	/**
+	 * 评论别人的回复
+	 * @param bbs_comment
+	 */
+	@Insert("insert into bbs_comment values(#{id},#{replyId},#{body},#{userId},#{buserId},#{modifiedOn},#{createdOn})")
+	void commentOneReply(Bbs_comment bbs_comment);
 }

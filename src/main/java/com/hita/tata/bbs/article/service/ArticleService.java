@@ -1,10 +1,13 @@
 package com.hita.tata.bbs.article.service;
 
 import com.hita.tata.bbs.article.dao.ArticleRepository;
+import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
+import com.hita.tata.bbs.article.param.response.CommentOneReplyResp;
 import com.hita.tata.bbs.article.param.response.PublishArticleResp;
 import com.hita.tata.bbs.article.param.response.PublishReplyResp;
+import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,14 +85,55 @@ public class ArticleService {
 		bbs_reply.setCreatedOn(date);
 		//存储到数据库
 		articleRepository.publishReply(bbs_reply);
-		//获取当前该帖子的回复量
-		Integer replyCount = articleRepository.getReplyCount(publishReply.getTopicId());
-		//让该帖子的回复量+1
-		articleRepository.addOneReplyCount(replyCount + 1,publishReply.getTopicId());
-		//获取该用户的回复总量
-		Integer replyCount2 = articleRepository.getReplyCount2(publishReply.getUserId());
-		//让该用户的回复总量 + 1
-		articleRepository.addOneReplyCount2(replyCount2 + 1, publishReply.getUserId());
+		//让帖子表和用户表的回复总数 + 1
+		addReplyCount(publishReply.getTopicId(),publishReply.getUserId());
 		return publishReplyResp;
+	}
+
+	/**
+	 * 评论别人的回复
+	 * @param commentOneReply
+	 * @return
+	 */
+	@Transactional
+	public CommentOneReplyResp commentOneReply(CommentOneReply commentOneReply) {
+		//创建发表时间和评论ID
+		Date date = new Date();
+		String id = "comment" + date.getTime();
+		//返回给前端的数据
+		CommentOneReplyResp commentOneReplyResp = new CommentOneReplyResp();
+		commentOneReplyResp.setId(id);
+		commentOneReplyResp.setReplyId(commentOneReply.getReplyId());
+		commentOneReplyResp.setBody(commentOneReply.getBody());
+		commentOneReplyResp.setUserId(commentOneReply.getUserId());
+		commentOneReplyResp.setCreatedOn(date);
+		//存储到数据库的数据
+		Bbs_comment bbs_comment = new Bbs_comment();
+		bbs_comment.setId(id);
+		bbs_comment.setReplyId(commentOneReply.getReplyId());
+		bbs_comment.setBody(commentOneReply.getBody());
+		bbs_comment.setUserId(commentOneReply.getUserId());
+		bbs_comment.setCreatedOn(date);
+		//存储到数据库
+		articleRepository.commentOneReply(bbs_comment);
+		//让帖子表和用户表的回复总数 + 1
+		addReplyCount(commentOneReply.getTopicId(),commentOneReply.getUserId());
+		return commentOneReplyResp;
+	}
+
+	/**
+	 * 让帖子表和用户表的回复总数 + 1
+	 * @param topicId
+	 * @param userId
+	 */
+	public void addReplyCount(String topicId, String userId) {
+		//获取当前该帖子的回复量
+		Integer replyCount = articleRepository.getReplyCount(topicId);
+		//让该帖子的回复量+1
+		articleRepository.addOneReplyCount(replyCount + 1,topicId);
+		//获取该用户的回复总量
+		Integer replyCount2 = articleRepository.getReplyCount2(userId);
+		//让该用户的回复总量 + 1
+		articleRepository.addOneReplyCount2(replyCount2 + 1, userId);
 	}
 }
