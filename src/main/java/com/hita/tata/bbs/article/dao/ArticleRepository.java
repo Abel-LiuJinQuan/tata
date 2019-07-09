@@ -32,6 +32,21 @@ public interface ArticleRepository {
 	int getReplyCount2(String userId);
 
 	/**
+	 * 获取该用户的帖子总量
+	 * @param userId
+	 * @return
+	 */
+	@Select("select topicCount from bbs_user where id = #{arg0}")
+	int getTopicCount(String userId);
+
+	/**
+	 * 获取该栏目的帖子总数
+	 * @param name
+	 * @return
+	 */
+	@Select("select topicCount from bbs_class where name = #{arg0}")
+	int getTopicCount2(String name);
+	/**
 	 * 让指定帖子的回复量 + 1
 	 * @param replyCount
 	 * @param topicId
@@ -46,6 +61,22 @@ public interface ArticleRepository {
 	 */
 	@Update("update bbs_user set replyCount = #{arg0} where id = #{arg1}")
 	void addOneReplyCount2(Integer replyCount,String userId);
+
+	/**
+	 * 让用户的帖子总量 + 1
+	 * @param topicCount
+	 * @param userId
+	 */
+	@Update("update bbs_user set topicCount = #{arg0} where id = #{arg1}")
+	void addOneTopicCount(Integer topicCount,String userId);
+
+	/**
+	 * 让栏目分类表的帖子总量 + 1
+	 * @param topicCount
+	 * @param name
+	 */
+	@Update("update bbs_class set topicCount = #{arg0} where name = #{arg1}")
+	void addOneTopicCount2(Integer topicCount,String name);
 
 	/**
 	 * 添加、发布帖子
@@ -68,6 +99,7 @@ public interface ArticleRepository {
 	 * 评论别人的回复
 	 * @param bbs_comment
 	 */
-	@Insert("insert into bbs_comment values(#{id},#{replyId},#{body},#{userId},#{buserId},#{modifiedOn},#{createdOn})")
+	@Insert("insert into bbs_comment values(#{id},#{replyId},#{body},#{userId},#{buserId}," +
+			"#{modifiedOn},#{createdOn})")
 	void commentOneReply(Bbs_comment bbs_comment);
 }

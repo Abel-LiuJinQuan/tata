@@ -2,7 +2,7 @@ package com.hita.tata.bbs.article.param.request;
 
 
 public class PublishArticle {
-	private String id;
+	private String userId;
 	private String title;
 	private String content;
 	private String parentName;
@@ -10,12 +10,12 @@ public class PublishArticle {
 	public PublishArticle() {
 	}
 
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getTitle() {

@@ -24,7 +24,7 @@ public class ArticleController {
 	private ArticleService articleService;
 
 	/**
-	 * 发布帖子（*******待修改*******）
+	 * 发布帖子(已测试)
 	 * @param publishArticle
 	 * @return
 	 */

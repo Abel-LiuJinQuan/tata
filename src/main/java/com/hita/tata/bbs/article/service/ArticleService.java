@@ -33,14 +33,15 @@ public class ArticleService {
 	 * @param publishArticle
 	 * @return
 	 */
+	@Transactional
 	public PublishArticleResp publishArticle(PublishArticle publishArticle) {
-		//帖子总计+1（用户表、版块分类表）
-		//**************************************************
+		//创建发表时间和帖子ID
 		Date date = new Date();
 		String id = "article" + date.getTime();
 		//返回给前端的数据
 		PublishArticleResp publishArticleResp = new PublishArticleResp();
-		publishArticleResp.setId(publishArticle.getId());
+		publishArticleResp.setId(id);
+		publishArticleResp.setUserId(publishArticle.getUserId());
 		publishArticleResp.setTitle(publishArticle.getTitle());
 		publishArticleResp.setContent(publishArticle.getContent());
 		publishArticleResp.setParentName(publishArticle.getParentName());
@@ -53,12 +54,17 @@ public class ArticleService {
 		bbs_topic.setEnabled("1");
 		bbs_topic.setCreatedOn(date);
 		bbs_topic.setTitle(publishArticle.getTitle());
-		bbs_topic.setUserId(publishArticle.getId());
+		bbs_topic.setUserId(publishArticle.getUserId());
 		bbs_topic.setReplyCount(0);
 		//存进数据库
 		articleRepository.publishArticle(bbs_topic);
+		//让用户表的帖子总数 + 1
+		Integer topicCount = articleRepository.getTopicCount(publishArticle.getUserId());
+		articleRepository.addOneTopicCount(topicCount+1,publishArticle.getUserId());
+		//让版块分类表的帖子总数 + 1
+		Integer topicCount2 = articleRepository.getTopicCount2(publishArticle.getParentName());
+		articleRepository.addOneTopicCount2(topicCount2+1,publishArticle.getParentName());
 		return publishArticleResp;
-
 	}
 
 	/**
