@@ -1,9 +1,11 @@
 package com.hita.tata.bbs.article.service;
 
 import com.hita.tata.bbs.article.dao.ArticleRepository;
+import com.hita.tata.bbs.article.param.request.CommentOneComment;
 import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
+import com.hita.tata.bbs.article.param.response.CommentOneCommentResp;
 import com.hita.tata.bbs.article.param.response.CommentOneReplyResp;
 import com.hita.tata.bbs.article.param.response.PublishArticleResp;
 import com.hita.tata.bbs.article.param.response.PublishReplyResp;
@@ -119,6 +121,38 @@ public class ArticleService {
 		//让帖子表和用户表的回复总数 + 1
 		addReplyCount(commentOneReply.getTopicId(),commentOneReply.getUserId());
 		return commentOneReplyResp;
+	}
+
+	/**
+	 * 评论别人的评论
+	 * @param commentOneComment
+	 */
+	@Transactional
+	public CommentOneCommentResp commentOneComment(CommentOneComment commentOneComment) {
+		//创建发表时间和评论ID
+		Date date = new Date();
+		String id = "comment" + date.getTime();
+		//返回给前端的数据
+		CommentOneCommentResp commentOneCommentResp = new CommentOneCommentResp();
+		commentOneCommentResp.setId(id);
+		commentOneCommentResp.setTopicId(commentOneComment.getTopicId());
+		commentOneCommentResp.setReplyId(commentOneComment.getReplyId());
+		commentOneCommentResp.setBody(commentOneComment.getBody());
+		commentOneCommentResp.setUserId(commentOneComment.getUserId());
+		commentOneCommentResp.setBuserId(commentOneComment.getBuserId());
+		commentOneCommentResp.setCreatedOn(date);
+		//存储到数据库的数据
+		Bbs_comment bbs_comment = new Bbs_comment();
+		bbs_comment.setId(id);
+		bbs_comment.setReplyId(commentOneComment.getReplyId());
+		bbs_comment.setBody(commentOneComment.getBody());
+		bbs_comment.setUserId(commentOneComment.getUserId());
+		bbs_comment.setBuserId(commentOneComment.getBuserId());
+		bbs_comment.setCreatedOn(date);
+		//存储到数据库
+		articleRepository.commentOneReply(bbs_comment);
+		addReplyCount(commentOneComment.getTopicId(),commentOneComment.getUserId());
+		return commentOneCommentResp;
 	}
 
 	/**

@@ -1,9 +1,11 @@
 package com.hita.tata.bbs.article.web;
 
 
+import com.hita.tata.bbs.article.param.request.CommentOneComment;
 import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
+import com.hita.tata.bbs.article.param.response.CommentOneCommentResp;
 import com.hita.tata.bbs.article.param.response.CommentOneReplyResp;
 import com.hita.tata.bbs.article.param.response.PublishArticleResp;
 import com.hita.tata.bbs.article.param.response.PublishReplyResp;
@@ -61,14 +63,14 @@ public class ArticleController {
 	}
 
 	/**
-	 * 评论别人的评论
+	 * 评论别人的评论(已测试)
 	 */
 	@RequestMapping(
 			value = {"commentOneComment"},
 			method = RequestMethod.POST
 	)
-	public void commentOneComment() {
-
+	public CommentOneCommentResp commentOneComment(CommentOneComment commentOneComment) {
+		return articleService.commentOneComment(commentOneComment);
 	}
 
 }
