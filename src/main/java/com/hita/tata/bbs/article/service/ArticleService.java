@@ -1,6 +1,7 @@
 package com.hita.tata.bbs.article.service;
 
 import com.hita.tata.bbs.article.dao.ArticleRepository;
+import com.hita.tata.bbs.article.entity.ArticleInform;
 import com.hita.tata.bbs.article.param.request.CommentOneComment;
 import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
@@ -159,6 +160,13 @@ public class ArticleService {
 		articleRepository.commentOneReply(bbs_comment);
 		addReplyCount(commentOneComment.getTopicId(),commentOneComment.getUserId());
 		return commentOneCommentResp;
+	}
+
+	public void getArticleDetail(String topicId) {
+		//获取主帖的信息
+		ArticleInform articleInform  = articleRepository.getArticle(topicId);
+
+		return;
 	}
 
 	/**

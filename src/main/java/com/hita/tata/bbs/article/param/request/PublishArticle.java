@@ -1,6 +1,8 @@
 package com.hita.tata.bbs.article.param.request;
 
-
+/**
+ * "发布帖子接口"接收参数
+ */
 public class PublishArticle {
 	private String userId;
 	private String title;

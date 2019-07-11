@@ -1,5 +1,8 @@
 package com.hita.tata.bbs.article.param.request;
 
+/**
+ * "评论别人的评论接口"接收参数
+ */
 public class CommentOneComment {
 	private String topicId;
 	private String replyId;

@@ -3,6 +3,7 @@ package com.hita.tata.bbs.block.web;
 import com.hita.tata.bbs.block.param.response.AddBlockResp;
 import com.hita.tata.bbs.block.param.response.BlockAndUrl;
 import com.hita.tata.bbs.block.service.BlockService;
+import com.hita.tata.common.entity.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,7 @@ public class BlockController {
 			value = {"listBlocks"},
 			method = RequestMethod.POST
 	)
-	public List<BlockAndUrl> listBlocks() {
+	public ResponseMessage listBlocks() {
 		return blockService.listBlocks();
 	}
 

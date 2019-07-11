@@ -2,8 +2,9 @@ package com.hita.tata.bbs.block.service;
 
 import com.hita.tata.bbs.block.dao.BlockRepository;
 import com.hita.tata.bbs.block.param.response.AddBlockResp;
-import com.hita.tata.bbs.block.param.response.BlockAndUrl;
 import com.hita.tata.common.entity.bbs.block.Bbs_class;
+import com.hita.tata.common.entity.response.Constant;
+import com.hita.tata.common.entity.response.ResponseMessage;
 import com.hita.tata.common.mongodb.dao.MongoServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
@@ -30,8 +31,14 @@ public class BlockService {
 	 * 获取所有栏目分类（栏目名 + 图标url）
 	 * @return
 	 */
-	public List<BlockAndUrl> listBlocks() {
-		return blockRepository.listBlocks();
+	public ResponseMessage listBlocks() {
+		List list = blockRepository.listBlocks();
+		//如果获取的数量为0
+		if(list.size() == 0) {
+			return ResponseMessage.newErrorInstance(Constant.ERROR);
+		} else {
+			return ResponseMessage.newOkInstance(list,Constant.SUCCESS);
+		}
 	}
 
 	/**

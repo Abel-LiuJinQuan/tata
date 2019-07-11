@@ -2,6 +2,9 @@ package com.hita.tata.bbs.article.param.response;
 
 import java.util.Date;
 
+/**
+ * "发布帖子接口"返回参数
+ */
 public class PublishArticleResp {
 	private String id;
 	private String userId;

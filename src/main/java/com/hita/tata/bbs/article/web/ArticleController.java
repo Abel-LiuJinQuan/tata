@@ -73,4 +73,8 @@ public class ArticleController {
 		return articleService.commentOneComment(commentOneComment);
 	}
 
+	public void getArticleDetail(String topicId) {
+//		return articleService.getArticleDetail(topicId);
+	}
+
 }

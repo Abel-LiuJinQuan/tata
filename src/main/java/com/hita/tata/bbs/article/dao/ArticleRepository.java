@@ -1,12 +1,11 @@
 package com.hita.tata.bbs.article.dao;
 
+import com.hita.tata.bbs.article.entity.ArticleInform;
 import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.hita.tata.common.entity.user.UserInform;
+import org.apache.ibatis.annotations.*;
 
 /**
  * 帖子数据库操作方法类
@@ -102,4 +101,37 @@ public interface ArticleRepository {
 	@Insert("insert into bbs_comment values(#{id},#{replyId},#{body},#{userId},#{buserId}," +
 			"#{modifiedOn},#{createdOn})")
 	void commentOneReply(Bbs_comment bbs_comment);
+
+
+	/**
+	 * 获取一条帖子
+	 * @param topicId
+	 * @return
+	 */
+	@Results({
+			@Result(column = "id",property = "id"),
+			@Result(column = "classId",property = "classId"),
+			@Result(column = "title",property = "title"),
+			@Result(column = "body",property = "body"),
+			@Result(column = "userId",property = "userInform",
+					one = @One(select = "com.hita.tata.bbs.article.dao.ArticleRepository.getUserInform")),
+			@Result(column = "replyCount",property = "replyCount"),
+			@Result(column = "createdOn",property = "createdOn")
+	})
+	@Select("select * from bbs_topic where id = #{arg0}")
+	ArticleInform getArticle(String topicId);
+
+	/**
+	 * 根据用户ID获取用户的基本信息
+	 * @param userId
+	 * @return
+	 */
+	@Results({
+			@Result(column = "id",property = "userId"),
+			@Result(column = "userName",property = "userName"),
+			@Result(column = "headUrl",property = "headUrl")
+	})
+	@Select("select * from bbs_user where id = #{arg0}")
+	UserInform getUserInform(String userId);
+
 }

@@ -1,5 +1,8 @@
 package com.hita.tata.bbs.article.param.request;
 
+/**
+ * "发表评论接口"接收参数
+ */
 public class PublishReply {
 	private String topicId;
 	private String body;

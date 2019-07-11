@@ -2,6 +2,9 @@ package com.hita.tata.bbs.article.param.response;
 
 import java.util.Date;
 
+/**
+ * "评论别人的回复接口"返回参数
+ */
 public class CommentOneReplyResp {
 	private String id;
 	private String replyId;
