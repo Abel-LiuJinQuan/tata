@@ -5,11 +5,8 @@ import com.hita.tata.bbs.article.param.request.CommentOneComment;
 import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
-import com.hita.tata.bbs.article.param.response.CommentOneCommentResp;
-import com.hita.tata.bbs.article.param.response.CommentOneReplyResp;
-import com.hita.tata.bbs.article.param.response.PublishArticleResp;
-import com.hita.tata.bbs.article.param.response.PublishReplyResp;
 import com.hita.tata.bbs.article.service.ArticleService;
+import com.hita.tata.common.entity.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +29,7 @@ public class ArticleController {
 			value = {"publishArticle"},
 			method = RequestMethod.POST
 	)
-	public PublishArticleResp publishArticle(@ModelAttribute PublishArticle publishArticle) {
+	public ResponseMessage publishArticle(@ModelAttribute PublishArticle publishArticle) {
 		return articleService.publishArticle(publishArticle);
 	}
 
@@ -45,7 +42,7 @@ public class ArticleController {
 			value = {"publishReply"},
 			method = RequestMethod.POST
 	)
-	public PublishReplyResp publishReply(@ModelAttribute PublishReply publishReply) {
+	public ResponseMessage publishReply(@ModelAttribute PublishReply publishReply) {
 		return articleService.publishReply(publishReply);
 	}
 
@@ -58,7 +55,7 @@ public class ArticleController {
 			value = {"commentOneReply"},
 			method = RequestMethod.POST
 	)
-	public CommentOneReplyResp commentOneReply(CommentOneReply commentOneReply) {
+	public ResponseMessage commentOneReply(CommentOneReply commentOneReply) {
 		return articleService.commentOneReply(commentOneReply);
 	}
 
@@ -69,12 +66,21 @@ public class ArticleController {
 			value = {"commentOneComment"},
 			method = RequestMethod.POST
 	)
-	public CommentOneCommentResp commentOneComment(CommentOneComment commentOneComment) {
+	public ResponseMessage commentOneComment(CommentOneComment commentOneComment) {
 		return articleService.commentOneComment(commentOneComment);
 	}
 
-	public void getArticleDetail(String topicId) {
-//		return articleService.getArticleDetail(topicId);
+	/**
+	 * 获取帖子的详细内容
+	 * @param topicId
+	 * @return
+	 */
+	@RequestMapping(
+			value = {"getArticleDetail"},
+			method = RequestMethod.POST
+	)
+	public ResponseMessage getArticleDetail(String topicId) {
+		return articleService.getArticleDetail(topicId);
 	}
 
 }

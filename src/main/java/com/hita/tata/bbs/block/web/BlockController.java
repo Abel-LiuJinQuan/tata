@@ -44,7 +44,7 @@ public class BlockController {
 			value = {"addBlock"},
 			method = RequestMethod.POST
 	)
-	public AddBlockResp addBlocks(@RequestParam("file") MultipartFile file,String name,String parentName) {
+	public ResponseMessage addBlocks(@RequestParam("file") MultipartFile file,String name,String parentName) {
 		return blockService.addBlocks(file,name,parentName);
 	}
 
@@ -60,7 +60,7 @@ public class BlockController {
 			value = {"updateBlock"},
 			method = RequestMethod.POST
 	)
-	public AddBlockResp updateBlock(@RequestParam("file") MultipartFile file,String id,String name,String parentName) {
+	public ResponseMessage updateBlock(@RequestParam("file") MultipartFile file,String id,String name,String parentName) {
 		return blockService.updateBlock(file,id,name,parentName);
 	}
 

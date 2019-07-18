@@ -47,45 +47,72 @@ public class BlockService {
 	 * @param file
 	 * @return
 	 */
-	public AddBlockResp addBlocks(MultipartFile file,String name,String parentName) {
-		Date dateTime = new Date();
-		//栏目ID
-		String id = file.getOriginalFilename() + dateTime.getTime();
-		//栏目logo图片的URL
-		String url = mongoServiceImp.saveImage(file);
-		//返回给前端的数据
-		AddBlockResp addBlockResp = new AddBlockResp();
-		addBlockResp.setId(id);
-		addBlockResp.setImgUrl(url);
-		addBlockResp.setName(name);
-		addBlockResp.setParentName(parentName);
-		addBlockResp.setCreatedOn(dateTime);
-		//存进数据库的数据
-		Bbs_class bbs_class = new Bbs_class();
-		bbs_class.setId(id);
-		bbs_class.setParentId(parentName);
-		bbs_class.setName(name);
-		bbs_class.setTopicCount(0);
-		bbs_class.setReplyCount(0);
-		bbs_class.setImgUrl(url);
-		bbs_class.setEnabled("1");
-		bbs_class.setCreatedOn(dateTime);
-		//添加进数据库
-		blockRepository.addBlocks(bbs_class);
-		return addBlockResp;
+	public ResponseMessage addBlocks(MultipartFile file,String name,String parentName) {
+
+		String filename = file.getOriginalFilename();
+		//判断是否为图片
+		if (filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".gif")
+				|| filename.endsWith(".jpeg") || filename.endsWith(".JPG") || filename.endsWith(".PNG")
+				|| filename.endsWith(".GIF") || filename.endsWith(".JPEG")) {
+
+			Date dateTime = new Date();
+			//栏目ID
+			String id = file.getOriginalFilename() + dateTime.getTime();
+			//栏目logo图片的URL
+			String url = mongoServiceImp.saveImage(file);
+			//返回给前端的数据
+			AddBlockResp addBlockResp = new AddBlockResp();
+			addBlockResp.setId(id);
+			addBlockResp.setImgUrl(url);
+			addBlockResp.setName(name);
+			addBlockResp.setParentName(parentName);
+			addBlockResp.setCreatedOn(dateTime);
+			//存进数据库的数据
+			Bbs_class bbs_class = new Bbs_class();
+			bbs_class.setId(id);
+			bbs_class.setParentId(parentName);
+			bbs_class.setName(name);
+			bbs_class.setTopicCount(0);
+			bbs_class.setReplyCount(0);
+			bbs_class.setImgUrl(url);
+			bbs_class.setEnabled("1");
+			bbs_class.setCreatedOn(dateTime);
+			//添加进数据库
+			blockRepository.addBlocks(bbs_class);
+			return ResponseMessage.newOkInstance(addBlockResp,Constant.SUCCESS);
+		} else {
+			return ResponseMessage.newErrorInstance(Constant.ERROR);
+		}
 	}
 
-	public AddBlockResp updateBlock(MultipartFile file,String id,String name,String parentName) {
-		//栏目logo图片的URL
-		String url = mongoServiceImp.saveImage(file);
-		//返回给前端的数据
-		AddBlockResp addBlockResp = new AddBlockResp();
-		addBlockResp.setId(id);
-		addBlockResp.setName(name);
-		addBlockResp.setParentName(parentName);
-		addBlockResp.setImgUrl(url);
-		blockRepository.updateBlock(id,name,parentName,url);
-		return addBlockResp;
+	/**
+	 * 修改栏目信息
+	 * @param file
+	 * @param id
+	 * @param name
+	 * @param parentName
+	 * @return
+	 */
+	public ResponseMessage updateBlock(MultipartFile file,String id,String name,String parentName) {
+		String filename = file.getOriginalFilename();
+		//判断是否为图片
+		if (filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".gif")
+				|| filename.endsWith(".jpeg") || filename.endsWith(".JPG") || filename.endsWith(".PNG")
+				|| filename.endsWith(".GIF") || filename.endsWith(".JPEG")) {
+
+			//栏目logo图片的URL
+			String url = mongoServiceImp.saveImage(file);
+			//返回给前端的数据
+			AddBlockResp addBlockResp = new AddBlockResp();
+			addBlockResp.setId(id);
+			addBlockResp.setName(name);
+			addBlockResp.setParentName(parentName);
+			addBlockResp.setImgUrl(url);
+			blockRepository.updateBlock(id, name, parentName, url);
+			return ResponseMessage.newOkInstance(addBlockResp,Constant.SUCCESS);
+		} else {
+			return ResponseMessage.newErrorInstance(Constant.ERROR);
+		}
 	}
 
 

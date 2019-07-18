@@ -1,11 +1,15 @@
 package com.hita.tata.bbs.article.dao;
 
 import com.hita.tata.bbs.article.entity.ArticleInform;
+import com.hita.tata.bbs.article.entity.CommentInform;
+import com.hita.tata.bbs.article.entity.ReplyInform;
 import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
 import com.hita.tata.common.entity.user.UserInform;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  * 帖子数据库操作方法类
@@ -121,6 +125,25 @@ public interface ArticleRepository {
 	@Select("select * from bbs_topic where id = #{arg0}")
 	ArticleInform getArticle(String topicId);
 
+
+	/**
+	 * 根据帖子ID获取所有该帖子的回复和评论
+	 * @param topicId
+	 * @return
+	 */
+	@Results({
+			@Result(column = "topicId",property = "topicId"),
+			@Result(column = "id",property = "replyId"),
+			@Result(column = "body",property = "body"),
+			@Result(column = "userId",property = "userInform",
+					one = @One(select = "com.hita.tata.bbs.article.dao.ArticleRepository.getUserInform")),
+			@Result(column = "createdOn",property = "createdOn"),
+			@Result(column = "id",property = "commentInform",
+					many = @Many(select = "com.hita.tata.bbs.article.dao.ArticleRepository.getCommentInform"))
+	})
+	@Select("select * from bbs_reply where topicId = #{arg0}")
+	List<ReplyInform> getReplyInform(String topicId);
+
 	/**
 	 * 根据用户ID获取用户的基本信息
 	 * @param userId
@@ -133,5 +156,23 @@ public interface ArticleRepository {
 	})
 	@Select("select * from bbs_user where id = #{arg0}")
 	UserInform getUserInform(String userId);
+
+	/**
+	 * 根据回复ID获取该回复的所有评论
+	 * @param replyId
+	 * @return
+	 */
+	@Results({
+			@Result(column = "id",property = "commentId"),
+			@Result(column = "replyId",property = "replyId"),
+			@Result(column = "body",property = "body"),
+			@Result(column = "userId",property = "userInform",
+					one = @One(select = "com.hita.tata.bbs.article.dao.ArticleRepository.getUserInform")),
+			@Result(column = "buserId",property = "buserInfrom",
+					one = @One(select = "com.hita.tata.bbs.article.dao.ArticleRepository.getUserInform")),
+			@Result(column = "createdOn",property = "createdOn")
+	})
+	@Select("select * from bbs_comment where replyId = #{arg0}")
+	List<CommentInform> getCommentInform(String replyId);
 
 }

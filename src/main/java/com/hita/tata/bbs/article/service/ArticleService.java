@@ -2,22 +2,23 @@ package com.hita.tata.bbs.article.service;
 
 import com.hita.tata.bbs.article.dao.ArticleRepository;
 import com.hita.tata.bbs.article.entity.ArticleInform;
+import com.hita.tata.bbs.article.entity.ReplyInform;
 import com.hita.tata.bbs.article.param.request.CommentOneComment;
 import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
-import com.hita.tata.bbs.article.param.response.CommentOneCommentResp;
-import com.hita.tata.bbs.article.param.response.CommentOneReplyResp;
-import com.hita.tata.bbs.article.param.response.PublishArticleResp;
-import com.hita.tata.bbs.article.param.response.PublishReplyResp;
+import com.hita.tata.bbs.article.param.response.*;
 import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
+import com.hita.tata.common.entity.response.Constant;
+import com.hita.tata.common.entity.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 帖子方法类
@@ -35,7 +36,7 @@ public class ArticleService {
 	 * @return
 	 */
 	@Transactional
-	public PublishArticleResp publishArticle(PublishArticle publishArticle) {
+	public ResponseMessage publishArticle(PublishArticle publishArticle) {
 		//创建发表时间和帖子ID
 		Date date = new Date();
 		String id = "article" + date.getTime();
@@ -65,7 +66,7 @@ public class ArticleService {
 		//让版块分类表的帖子总数 + 1
 		Integer topicCount2 = articleRepository.getTopicCount2(publishArticle.getParentName());
 		articleRepository.addOneTopicCount2(topicCount2+1,publishArticle.getParentName());
-		return publishArticleResp;
+		return ResponseMessage.newOkInstance(publishArticleResp,Constant.SUCCESS);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class ArticleService {
 	 * @return
 	 */
 	@Transactional
-	public PublishReplyResp publishReply(PublishReply publishReply) {
+	public ResponseMessage publishReply(PublishReply publishReply) {
 		//创建发表时间和回复ID
 		Date date = new Date();
 		String id = "reply" + date.getTime();
@@ -96,7 +97,7 @@ public class ArticleService {
 		articleRepository.publishReply(bbs_reply);
 		//让帖子表和用户表的回复总数 + 1
 		addReplyCount(publishReply.getTopicId(),publishReply.getUserId());
-		return publishReplyResp;
+		return ResponseMessage.newOkInstance(publishReplyResp,Constant.SUCCESS);
 	}
 
 	/**
@@ -105,7 +106,7 @@ public class ArticleService {
 	 * @return
 	 */
 	@Transactional
-	public CommentOneReplyResp commentOneReply(CommentOneReply commentOneReply) {
+	public ResponseMessage commentOneReply(CommentOneReply commentOneReply) {
 		//创建发表时间和评论ID
 		Date date = new Date();
 		String id = "comment" + date.getTime();
@@ -127,7 +128,7 @@ public class ArticleService {
 		articleRepository.commentOneReply(bbs_comment);
 		//让帖子表和用户表的回复总数 + 1
 		addReplyCount(commentOneReply.getTopicId(),commentOneReply.getUserId());
-		return commentOneReplyResp;
+		return ResponseMessage.newOkInstance(commentOneReplyResp,Constant.SUCCESS);
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class ArticleService {
 	 * @param commentOneComment
 	 */
 	@Transactional
-	public CommentOneCommentResp commentOneComment(CommentOneComment commentOneComment) {
+	public ResponseMessage commentOneComment(CommentOneComment commentOneComment) {
 		//创建发表时间和评论ID
 		Date date = new Date();
 		String id = "comment" + date.getTime();
@@ -159,14 +160,25 @@ public class ArticleService {
 		//存储到数据库
 		articleRepository.commentOneReply(bbs_comment);
 		addReplyCount(commentOneComment.getTopicId(),commentOneComment.getUserId());
-		return commentOneCommentResp;
+		return ResponseMessage.newOkInstance(commentOneCommentResp,Constant.SUCCESS);
 	}
 
-	public void getArticleDetail(String topicId) {
+	/**
+	 * 获取帖子的详细内容
+	 * @param topicId
+	 * @return
+	 */
+	@Transactional
+	public ResponseMessage getArticleDetail(String topicId) {
 		//获取主帖的信息
 		ArticleInform articleInform  = articleRepository.getArticle(topicId);
-
-		return;
+		//获取帖子的回复和相关评论
+		List<ReplyInform> replyInform = articleRepository.getReplyInform(topicId);
+		//返回给前端的数据
+		GetArticleDetailResp getArticleDetailResp = new GetArticleDetailResp();
+		getArticleDetailResp.setArticleInform(articleInform);
+		getArticleDetailResp.setReplyList(replyInform);
+		return ResponseMessage.newOkInstance(getArticleDetailResp,Constant.SUCCESS);
 	}
 
 	/**
