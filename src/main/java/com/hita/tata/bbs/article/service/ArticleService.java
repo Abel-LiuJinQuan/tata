@@ -1,5 +1,7 @@
 package com.hita.tata.bbs.article.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hita.tata.bbs.article.dao.ArticleRepository;
 import com.hita.tata.bbs.article.entity.ArticleInform;
 import com.hita.tata.bbs.article.entity.ReplyInform;
@@ -8,6 +10,9 @@ import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
 import com.hita.tata.bbs.article.param.response.*;
+import com.hita.tata.bbs.block.param.request.GetArticleByBlock;
+import com.hita.tata.bbs.block.param.response.ArticleListInform;
+import com.hita.tata.bbs.block.param.response.GetArticleByBlockResp;
 import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
@@ -179,6 +184,28 @@ public class ArticleService {
 		getArticleDetailResp.setArticleInform(articleInform);
 		getArticleDetailResp.setReplyList(replyInform);
 		return ResponseMessage.newOkInstance(getArticleDetailResp,Constant.SUCCESS);
+	}
+
+	/**
+	 * 根据栏目名获取帖子列表（分页获取）
+	 * @param getArticleByBlock
+	 * @return
+	 */
+	public ResponseMessage getArticleList(GetArticleByBlock getArticleByBlock) {
+		//确定获取第几页，并规定每一页的大小
+		PageHelper.startPage(getArticleByBlock.getPageNum(),getArticleByBlock.getPageSize());
+		//查询所有记录
+		List<ArticleListInform> articleListInform = articleRepository.getArticleList(getArticleByBlock.getBlockName());
+		//返回给前端的参数
+		GetArticleByBlockResp getArticleByBlockResp = new GetArticleByBlockResp();
+		getArticleByBlockResp.setArticleList(articleListInform);
+		getArticleByBlockResp.setPageNum(getArticleByBlock.getPageNum());
+		getArticleByBlockResp.setPageSize(getArticleByBlock.getPageSize());
+		//获取查询总数
+		PageInfo<ArticleListInform> info = new PageInfo<>(articleListInform);
+		getArticleByBlockResp.setTotal((int)info.getTotal());
+		return ResponseMessage.newOkInstance(getArticleByBlockResp,Constant.SUCCESS);
+//		return getArticleByBlockResp;
 	}
 
 	/**

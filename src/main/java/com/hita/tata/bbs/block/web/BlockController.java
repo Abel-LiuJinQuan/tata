@@ -1,14 +1,11 @@
 package com.hita.tata.bbs.block.web;
 
-import com.hita.tata.bbs.block.param.response.AddBlockResp;
-import com.hita.tata.bbs.block.param.response.BlockAndUrl;
 import com.hita.tata.bbs.block.service.BlockService;
 import com.hita.tata.common.entity.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 /**
  * 论坛栏目部分

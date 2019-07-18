@@ -6,6 +6,7 @@ import com.hita.tata.bbs.article.param.request.CommentOneReply;
 import com.hita.tata.bbs.article.param.request.PublishArticle;
 import com.hita.tata.bbs.article.param.request.PublishReply;
 import com.hita.tata.bbs.article.service.ArticleService;
+import com.hita.tata.bbs.block.param.request.GetArticleByBlock;
 import com.hita.tata.common.entity.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -71,7 +72,7 @@ public class ArticleController {
 	}
 
 	/**
-	 * 获取帖子的详细内容
+	 * 获取帖子的详细内容(已测试)
 	 * @param topicId
 	 * @return
 	 */
@@ -81,6 +82,19 @@ public class ArticleController {
 	)
 	public ResponseMessage getArticleDetail(String topicId) {
 		return articleService.getArticleDetail(topicId);
+	}
+
+	/**
+	 * 根据栏目名获取帖子列表（分页获取）
+	 * @param getArticleByBlock
+	 * @return
+	 */
+	@RequestMapping(
+			value = {"getArticleList"},
+			method = RequestMethod.POST
+	)
+	public ResponseMessage getArticleList(@ModelAttribute GetArticleByBlock getArticleByBlock) {
+		return articleService.getArticleList(getArticleByBlock);
 	}
 
 }

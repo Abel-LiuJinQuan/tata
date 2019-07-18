@@ -3,6 +3,7 @@ package com.hita.tata.bbs.article.dao;
 import com.hita.tata.bbs.article.entity.ArticleInform;
 import com.hita.tata.bbs.article.entity.CommentInform;
 import com.hita.tata.bbs.article.entity.ReplyInform;
+import com.hita.tata.bbs.block.param.response.ArticleListInform;
 import com.hita.tata.common.entity.bbs.Article.Bbs_comment;
 import com.hita.tata.common.entity.bbs.Article.Bbs_reply;
 import com.hita.tata.common.entity.bbs.Article.Bbs_topic;
@@ -125,6 +126,20 @@ public interface ArticleRepository {
 	@Select("select * from bbs_topic where id = #{arg0}")
 	ArticleInform getArticle(String topicId);
 
+	/**
+	 * 根据
+	 * @param classId
+	 * @return
+	 */
+	@Results({
+			@Result(column = "id",property = "topicId"),
+			@Result(column = "classId",property = "classId"),
+			@Result(column = "userId",property = "userId"),
+			@Result(column = "replyCount",property = "replyCount"),
+			@Result(column = "title",property = "title")
+	})
+	@Select("select * from bbs_topic where classId = #{arg0}")
+	List<ArticleListInform> getArticleList(String classId);
 
 	/**
 	 * 根据帖子ID获取所有该帖子的回复和评论
