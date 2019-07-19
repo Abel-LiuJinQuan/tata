@@ -127,7 +127,7 @@ public interface ArticleRepository {
 	ArticleInform getArticle(String topicId);
 
 	/**
-	 * 根据
+	 * 根据栏目名获取帖子信息列表
 	 * @param classId
 	 * @return
 	 */
@@ -135,6 +135,8 @@ public interface ArticleRepository {
 			@Result(column = "id",property = "topicId"),
 			@Result(column = "classId",property = "classId"),
 			@Result(column = "userId",property = "userId"),
+			@Result(column = "userId",property = "userName",
+					one = @One(select = "com.hita.tata.bbs.article.dao.ArticleRepository.getUserNameById")),
 			@Result(column = "replyCount",property = "replyCount"),
 			@Result(column = "title",property = "title")
 	})
@@ -171,6 +173,14 @@ public interface ArticleRepository {
 	})
 	@Select("select * from bbs_user where id = #{arg0}")
 	UserInform getUserInform(String userId);
+
+	/**
+	 * 根据用户ID获取用户名
+	 * @param userId
+	 * @return
+	 */
+	@Select("select userName from bbs_user where id = #{arg0}")
+	String getUserNameById(String userId);
 
 	/**
 	 * 根据回复ID获取该回复的所有评论

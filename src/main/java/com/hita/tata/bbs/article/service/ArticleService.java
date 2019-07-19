@@ -191,6 +191,7 @@ public class ArticleService {
 	 * @param getArticleByBlock
 	 * @return
 	 */
+	@Transactional
 	public ResponseMessage getArticleList(GetArticleByBlock getArticleByBlock) {
 		//确定获取第几页，并规定每一页的大小
 		PageHelper.startPage(getArticleByBlock.getPageNum(),getArticleByBlock.getPageSize());

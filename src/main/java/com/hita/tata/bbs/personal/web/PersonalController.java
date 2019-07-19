@@ -1,7 +1,9 @@
 package com.hita.tata.bbs.personal.web;
 
 import com.hita.tata.bbs.personal.service.PersonalService;
+import com.hita.tata.common.entity.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,15 +17,18 @@ public class PersonalController {
 
 	@Autowired
 	private PersonalService  personalService;
+
 	/**
-	 * 获取用户信息
+	 * 根据用户ID获取用户信息(已测试)
+	 * @param userId
+	 * @return
 	 */
 	@RequestMapping(
-			value = {"getUserInform"},
+			value = {"getUserInform/{userId}"},
 			method = RequestMethod.POST
 	)
-	public void getUserInform() {
-//		return personalService.getUserInform();
+	public ResponseMessage getUserInform(@PathVariable String userId) {
+		return personalService.getUserInform(userId);
 	}
 
 	/**

@@ -4,6 +4,7 @@ public class ArticleListInform {
 	private String topicId;
 	private String classId;
 	private String userId;
+	private String userName;
 	private Integer replyCount;
 	private String title;
 
@@ -32,6 +33,14 @@ public class ArticleListInform {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public Integer getReplyCount() {
