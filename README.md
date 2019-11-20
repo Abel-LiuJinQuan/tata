@@ -1,6 +1,14 @@
 # tata
-塔塔网站后台
-
+塔塔 AR 社区论坛系统是一个讨论 AR 热点话题和其他新兴技术的论坛交流平台。（注：本仓库存放的是项目的后台代码，前端代码往下拉即可找到链接地址）
+# 界面展示：
+1. 网站首页
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191120215154213.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FiZWxfTGl1amlucXVhbg==,size_16,color_FFFFFF,t_70)
+2. 论坛界面
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191120215337238.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FiZWxfTGl1amlucXVhbg==,size_16,color_FFFFFF,t_70)
+3. 登录界面
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191120221800122.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0FiZWxfTGl1amlucXVhbg==,size_16,color_FFFFFF,t_70)
+前端代码获取链接：https://github.com/Caijunbin/TATA.git
+# 后台
 ### 一、关于Mybatis使用：
 项目已经集成了Mybatis，使用步骤示例：
 ```
